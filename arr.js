@@ -43,11 +43,13 @@ arr.transpose = function(arr) {
 };
 
 arr.min = function(arr) {
-    return Math.min.apply(null, arr);
+    var mv = Math.min.apply(null, arr);
+    return [mv, arr.indexOf(mv)];
 };
 
 arr.max = function(arr) {
-    return Math.max.apply(null, arr);
+    var mv = Math.max.apply(null, arr);
+    return [mv, arr.indexOf(mv)];
 };
 
 // Sort an array and also return the sorted index list;

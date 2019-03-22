@@ -27,6 +27,7 @@ ben.syncWait = function(ms) {
 ben.date = {};
 
 // Return a date object representing the next occurance of a time on a specific weekday
+// dayOfWeek = 0 -> Sunday
 ben.date.nextDayAndTime = function(dayOfWeek, hour, minute) {
     var now = new Date();
     var result = new Date(
@@ -43,6 +44,7 @@ ben.date.nextDayAndTime = function(dayOfWeek, hour, minute) {
 };
 
 // Return a date object representing the previous occurance of a time on a specific weekday
+// dayOfWeek = 0 -> Sunday
 ben.date.prevDayAndTime = function(dayOfWeek, hour, minute) {
     var now = new Date();
     var result = new Date(

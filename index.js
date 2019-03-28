@@ -3,6 +3,7 @@ var ben = {};
 ben.arr =   require('./arr.js');
 ben.prom =  require('./prom.js');
 ben.fn =    require('./fn.js');
+ben.str =   require('./str.js');
 
 ben.math = {};
 

@@ -6,6 +6,7 @@ arr.zip = function(a, a2) {
     });
 };
 
+// Create object with keys and values
 arr.objectify = function(a, a2) {
     return a.reduce(function(o, k, i) {
         o[k] = a2[i];
@@ -17,22 +18,29 @@ arr.sum = function(a) {
     return a.reduce(function(total, num) { return total + num; });
 };
 
-arr.remove = function(a, member) {
-    var index = a.indexOf(member);
-    if (index > -1) { a.splice(index, 1); }
-    return a;
+// remove an element from an array
+// option to remove all instances of that element
+arr.remove = function(a, member, all) {
+    b = a.slice(); // Splice mutates the array, this copies it
+    if (all) {
+        return b.filter(function(e) { return e !== member; });
+    } else {
+        var index = b.indexOf(member);
+        b.splice(index, 1);
+        return b;
+    }
 };
 
-arr.contains = function(a, e) {
-    return (a.indexOf(e) > -1);
-};
+arr.contains = function(a, e) { return (a.indexOf(e) > -1); };
 
+// Remove duplicates in an array
 arr.uniquify = function(a) {
     return a.filter(function(e, i) {
         return a.indexOf(e) === i;
     });
 };
 
+// [[a,b], [c,d], [e,f]] -> [[a,c,e], [b,d,f]]
 arr.transpose = function(a) {
     var d = a.length;
     var b = a[0].length;
@@ -46,14 +54,21 @@ arr.transpose = function(a) {
     return c;
 };
 
+// Return the min of an array and its index
 arr.min = function(a) {
     var mv = Math.min.apply(null, a);
     return [mv, a.indexOf(mv)];
 };
 
+// Return the max of an array and its index
 arr.max = function(a) {
     var mv = Math.max.apply(null, a);
     return [mv, a.indexOf(mv)];
+};
+
+// Return an array [0,1,2...n-1]
+arr.nInts = function(n) {
+    return Array.apply(null, {length: n}).map(Function.call, Number);
 };
 
 // Sort an array and also return the sorted index list;
@@ -89,7 +104,7 @@ arr.reorder = function(a, inds) {
 };
 
 // Filter an array based on a function that returns true/false
-// Also return the indices of remainind elements
+// Also return the indices of remaining elements
 arr.filter2 = function(a, fn) {
     var filta = [];
     var goodInd = [];
@@ -108,6 +123,25 @@ arr.mask = function(a, inds) {
     return a.filter(function(e, i) {
         return arr.contains(inds, i);
     });
+};
+
+// remove specific elements of an array based on a list of indices
+// (Can be used with filter2 to filter one array based on how another was filtered)
+arr.invmask = function(a, inds) {
+    return a.filter(function(e, i) {
+        return !arr.contains(inds, i);
+    });
+};
+
+arr.intersection = function(a1, a2) {
+    a1.filter(function(n) {
+        return a2.indexOf(n) !== -1;
+    });
+};
+
+arr.union = function() {
+    var args = Array.prototype.slice.call(arguments);
+    return arr.uniquify(args.flat());
 };
 
 // chainProm executes a set of promises sequentially

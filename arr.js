@@ -150,7 +150,8 @@ arr.union = function() {
 // chainProm makes the resolved or rejected values of the previous promise available to a given function
 // That function(genF for resolved and catchF for rejected) is also passed the current array element and index
 // That function should then return a promise that gets chained and is used for the next iteration
-arr.chainProm = function(a, init, genF, catchF) {    var x = a.reduce(function(prev, cur, i) {
+arr.chainProm = function(a, init, genF, catchF) {
+    var x = a.reduce(function(prev, cur, i) {
         return prev.then(function(r) {
             // Promise generating functions take the previously returned value, the current value, and the current index
             return genF(r, cur, i);

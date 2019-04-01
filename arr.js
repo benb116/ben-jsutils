@@ -66,12 +66,48 @@ arr.max = function(a) {
     return [mv, a.indexOf(mv)];
 };
 
+// Return n random elements from an array
+arr.randEl = function(a, n) {
+    if (!n) { n = 1; }
+    if (n === 1) {
+        return a[Math.floor(Math.random()*a.length)];
+    }
+    var b = arr.shuffle(a);
+    var out = b.slice(0, n);
+    return out;
+};
+
+/**
+ * Returns a random shuffling of an array (does not mutate)
+ * https://stackoverflow.com/a/2450976/1293256
+ * @param  {Array} array The array to shuffle
+ * @return {String}      The first item in the shuffled array
+ */
+arr.shuffle = function(a) {
+    var array = a.slice();
+    var currentIndex = array.length;
+    var temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
+};
+
 // Return an array [0,1,2...n-1]
 arr.nInts = function(n) {
     return Array.apply(null, {length: n}).map(Function.call, Number);
 };
 
-// Sort an array and also return the sorted index list;
+// Sort an array and also return the sorted index array;
 arr.sort2 = function(a) {
     var list = [];
     var nEl = a.length;

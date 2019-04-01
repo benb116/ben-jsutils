@@ -1,7 +1,5 @@
 var date = {};
 
-var moment = require('moment-timezone');
-
 // Return a date object representing the next occurance of a time on a specific weekday
 // dayOfWeek = 0 -> Sunday
 date.nextDayAndTime = function(dayOfWeek, hour, minute) {
@@ -36,11 +34,11 @@ date.prevDayAndTime = function(dayOfWeek, hour, minute) {
     return result;
 };
 
-date.toEastern = function(ds) {
-    if (!ds.toISOString) {
-        ds = new Date(ds);
-    }
-    return new Date(moment(moment.utc(ds).toDate()).local().format('YYYY-MM-DDTHH:mm:ss')+'Z');
+// Shift a date so that it's UTC date is its original local date
+// I.e. if current time in Philly is 4pm (utc 8pm), this shifts so the utc time is 4pm (edt = 12pm)
+date.shiftTZ = function(d) {
+    if (!d.toISOString) { d = new Date(d); }
+    return new Date(d.getTime() - d.getTimezoneOffset()*60*1000);
 };
 
 module.exports = date;

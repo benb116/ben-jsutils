@@ -169,12 +169,21 @@ arr.invmask = function(a, inds) {
     });
 };
 
-arr.intersection = function(a1, a2) {
-    a1.filter(function(n) {
-        return a2.indexOf(n) !== -1;
+// Return all elements that are contained in all arrays
+arr.intersection = function() {
+    var args = Array.prototype.slice.call(arguments);
+    var nA = args.length;
+    var t = args[0];
+    return t.filter(function(e) {
+        var keep = 0;
+        for (var i = 1; i < nA; i++) {
+            keep = keep + (args[i].indexOf(e) !== -1);
+        }
+        return (keep === nA - 1);
     });
 };
 
+// Return all elements that are contained in any array
 arr.union = function() {
     var args = Array.prototype.slice.call(arguments);
     return arr.uniquify(args.flat());

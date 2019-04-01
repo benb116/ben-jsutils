@@ -1,6 +1,12 @@
 var req = {};
 
+var request;
 var rp;
+
+function loadRP() {
+    request = require('request');
+    rp = require('request-promise');
+}
 
 // This function returns a request promise nested within an outer promise.
 // The inner promise is the request promise that returns the raw data from the request
@@ -61,6 +67,7 @@ req.querify = function(inJSON) {
 
 // Returns a promise for a POST request with headers and formData
 req.post = function(url, headers, formData) {
+    loadRP();
     var POSTHead = Object.assign(req.postHeaders, headers);
     POSTHead['Content-Length'] = req.querify(formData).length;
     var options = {
@@ -75,6 +82,7 @@ req.post = function(url, headers, formData) {
 
 // Returns a promise for a GET request with headers and querys
 req.get = function(url, headers, form) {
+    loadRP();
     var GETHead = Object.assign(req.getHeaders, headers);
     var qString = '';
     if (form) {qString = '?'+req.querify(form);}
@@ -88,7 +96,4 @@ req.get = function(url, headers, form) {
     return rp(options);
 };
 
-module.exports = function(inRP) {
-    rp = (inRP || {});
-    return req;
-};
+module.exports = req;

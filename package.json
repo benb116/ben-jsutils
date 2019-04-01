@@ -1,0 +1,25 @@
+{
+  "name": "ben-jsutils",
+  "version": "0.1.0",
+  "description": "A personal collection of useful JS utilities",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benb116/ben-jsutils.git"
+  },
+  "keywords": [
+    "javascript",
+    "utilities"
+  ],
+  "author": "Ben Bernstein <benb116@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benb116/ben-jsutils/issues"
+  },
+  "homepage": "https://github.com/benb116/ben-jsutils#readme",
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}

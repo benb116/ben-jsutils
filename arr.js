@@ -1,5 +1,6 @@
 var arr = {};
 
+// Combine two arrays
 arr.zip = function(a, a2) {
     return a.map(function(e, i) {
         return [e, a2[i]];
@@ -14,23 +15,23 @@ arr.objectify = function(a, a2) {
     }, {}); 
 };
 
+// Return the cumulative sum of all elements in an array
 arr.sum = function(a) {
     return a.reduce(function(total, num) { return total + num; });
 };
 
-// remove an element from an array
+// Remove an element from an array
 // option to remove all instances of that element
 arr.remove = function(a, member, all) {
     b = a.slice(); // Splice mutates the array, this copies it
     if (all) {
         return b.filter(function(e) { return e !== member; });
     } else {
-        var index = b.indexOf(member);
-        b.splice(index, 1);
-        return b;
+        return b.splice(b.indexOf(member));
     }
 };
 
+// Does an array contain an element (return true or false)
 arr.contains = function(a, e) { return (a.indexOf(e) > -1); };
 
 // Remove duplicates in an array
@@ -40,7 +41,7 @@ arr.uniquify = function(a) {
     });
 };
 
-// [[a,b], [c,d], [e,f]] -> [[a,c,e], [b,d,f]]
+// [[a,b], [c,d], [e,f]] <-> [[a,c,e], [b,d,f]]
 arr.transpose = function(a) {
     var d = a.length;
     var b = a[0].length;
@@ -66,7 +67,7 @@ arr.max = function(a) {
     return [mv, a.indexOf(mv)];
 };
 
-// Return n random elements from an array
+// Return n random elements from an array (n defaults to 1)
 arr.randEl = function(a, n) {
     if (!n) { n = 1; }
     if (n === 1) {
@@ -175,11 +176,10 @@ arr.intersection = function() {
     var nA = args.length;
     var t = args[0];
     return t.filter(function(e) {
-        var keep = 0;
         for (var i = 1; i < nA; i++) {
-            keep = keep + (args[i].indexOf(e) !== -1);
+            if (!arr.contains(args[i], e)) { return false; }
         }
-        return (keep === nA - 1);
+        return true;
     });
 };
 

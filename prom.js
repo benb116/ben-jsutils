@@ -11,4 +11,23 @@ prom.promState = function(p) {
     });
 };
 
+// Wait ms before continuing a promise chain
+// promObj.then(ben.prom.delay(1000)).then(function(outputOfpromObj){});
+prom.delay = function(ms) {
+    return function(input) {
+        return new Promise(function(resolve, reject) {
+            setTimeout(resolve, ms, input);
+        });
+    };
+};
+
+
+// Returns a promise that resolves as the input promise or rejects after a timeout
+prom.timeout = function(P, ms) {
+    var pt = new Promise(function(resolve, reject) {
+        setTimeout(reject, ms, 'Promise timed out after '+ms+' ms');
+    });
+    return Promise.race([P, pt]);
+};
+
 module.exports = prom;

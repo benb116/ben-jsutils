@@ -108,6 +108,14 @@ arr.nInts = function(n) {
     return Array.apply(null, {length: n}).map(Function.call, Number);
 };
 
+// Reverse the order of an array ([1,2,3,4] => [4,3,2,1])
+arr.reverse = function(a) {
+    var l = a.length;
+    return a.map(function(e, i) {
+        return a[l-i-1];
+    });
+};
+
 // Sort an array and also return the sorted index array;
 arr.sort2 = function(a) {
     var list = [];

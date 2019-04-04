@@ -47,16 +47,16 @@ fn.waitBeforeRepeat = function() {
 // Run a function n times at most
 // Can also pass a truthy reset
 fn.nLimit = function(n) {
-	return (function() {
-		var nrun = 0;
-		return function(callback, reset) {
-			if (reset) { nrun = 0; }
-			if (nrun < n) {
-				callback();
-				nrun++;
-			}
-		};
-	})();
+    return (function() {
+        var nrun = 0;
+        return function(callback, reset) {
+            if (reset) { nrun = 0; }
+            if (nrun < n) {
+                callback();
+                nrun++;
+            }
+        };
+    })();
 };
 
 // Run a function immediately and also set it to repeat

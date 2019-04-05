@@ -3,8 +3,8 @@ var date = {};
 // Return a date object representing the next occurance of a time on a specific weekday
 // i.e. if today is Tuesday, April 2nd, nextDayAndTime(5, 3, 30, 0) => Friday, April 5 at 3:30
 // dayOfWeek = 0 -> Sunday
-date.nextDayAndTime = function(dayOfWeek, hour, minute, second) {
-    var now = new Date();
+date.nextDayAndTime = function(now, dayOfWeek, hour, minute, second) {
+    // var now = new Date();
     hour = (hour || 0);
     minute = (minute || 0);
     second = (second || 0);
@@ -25,8 +25,8 @@ date.nextDayAndTime = function(dayOfWeek, hour, minute, second) {
 // Return a date object representing the previous occurance of a time on a specific weekday
 // i.e. if today is Tuesday, April 2nd, prevDayAndTime(5, 3, 30, 0) => Friday, May 29 at 3:30
 // dayOfWeek = 0 -> Sunday
-date.prevDayAndTime = function(dayOfWeek, hour, minute, second) {
-    var now = new Date();
+date.prevDayAndTime = function(now, dayOfWeek, hour, minute, second) {
+    // var now = new Date();
     hour = (hour || 0);
     minute = (minute || 0);
     second = (second || 0);

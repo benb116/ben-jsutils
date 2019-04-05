@@ -20,6 +20,17 @@ arr.sum = function(a) {
     return a.reduce(function(total, num) { return total + num; });
 };
 
+// Returns a[i+1] - a[i]
+arr.diff = function(a) {
+    var a2 = a.slice();
+    var b = a.slice();
+    a2.shift();
+    b.pop();
+    return a2.map(function(e, i) {
+        return e - b[i];
+    });
+};
+
 // Remove an element from an array
 // option to remove all instances of that element
 arr.remove = function(a, member, all) {
@@ -33,6 +44,13 @@ arr.remove = function(a, member, all) {
 
 // Does an array contain an element (return true or false)
 arr.contains = function(a, e) { return (a.indexOf(e) > -1); };
+
+// Returns all indices of an array where an element is located
+arr.findAll = function(a, e) {
+    return arr.nInts(a.length).filter(function(i) {
+        return a[i] === e;
+    });
+};
 
 // Remove duplicates in an array
 arr.uniquify = function(a) {
@@ -78,12 +96,8 @@ arr.randEl = function(a, n) {
     return out;
 };
 
-/**
- * Returns a random shuffling of an array (does not mutate)
- * https://stackoverflow.com/a/2450976/1293256
- * @param  {Array} array The array to shuffle
- * @return {String}      The first item in the shuffled array
- */
+// Returns a random shuffling of an array (does not mutate)
+// https://stackoverflow.com/a/2450976/1293256
 arr.shuffle = function(a) {
     var array = a.slice();
     var currentIndex = array.length;

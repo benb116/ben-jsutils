@@ -5,6 +5,7 @@ var prom = require('./prom.js');
 // This returns a delay function that calls a callback after a certain amount of time
 // If the returned delay function is called again before the timeout, it will reset the timer and begin delaying again
 // The callback can be executed immediately by passing a truthy value as the 'immediate' argument
+// var d = fn.debounce(); d(function() { dostuff(); }, 1000);
 fn.debounce = function(immediate) {
     return (function() {
         var timer = 0;

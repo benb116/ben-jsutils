@@ -21,13 +21,19 @@ prom.delay = function(ms) {
     };
 };
 
-
 // Returns a promise that resolves as the input promise or rejects after a timeout
 prom.timeout = function(P, ms) {
     var pt = new Promise(function(resolve, reject) {
         setTimeout(reject, ms, 'Promise timed out after '+ms+' ms');
     });
     return Promise.race([P, pt]);
+};
+
+// Execute an array of promises sequentially
+prom.seqProm = function(pArr) {
+    return pArr.reduce(function(chain, cur) {
+        chain.then(cur);
+    }, Promise.resolve());
 };
 
 module.exports = prom;

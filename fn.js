@@ -18,6 +18,7 @@ fn.debounce = function(immediate) {
 };
 
 // Returns a function that only allows a function to run every X ms
+// var d = fn.throttle(); d(function() { dostuff(); }, 1000);
 fn.throttle = function(ms) {
     return (function() {
         var isrunning = 0;
@@ -60,7 +61,7 @@ fn.nLimit = function(n) {
     })();
 };
 
-// Run a function immediately and also set it to repeat
+// Run a function immediately and also set it to repeat every i ms
 fn.immedateInterval = function(f, i) {
     f(); setInterval(f, i);
 };

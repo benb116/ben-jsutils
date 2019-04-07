@@ -9,6 +9,7 @@ My personal collection of useful JS utilities. Functions are broken down into ca
 * [Math](https://github.com/benb116/ben-jsutils/blob/master/math.js)
 * [Dates](https://github.com/benb116/ben-jsutils/blob/master/date.js)
 * [Requests](https://github.com/benb116/ben-jsutils/blob/master/req.js)
+* [Buffers](https://github.com/benb116/ben-jsutils/blob/master/buf.js)
 
 There are some general use functions in the [main](https://github.com/benb116/ben-jsutils/blob/master/index.js) file.
 

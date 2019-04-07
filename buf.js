@@ -23,4 +23,20 @@ var buf = function(n, e) {
     return out;
 };
 
+/**
+
+var b = ben.buf(10, 0);
+// b.buffer = [0,0,0,0,0,0,0,0,0,0]
+// b.count = 0
+
+b.push(2);
+// b.buffer = [0,0,0,0,0,0,0,0,0,2]; 
+// b.count = 1
+
+b.push(4);
+// b.buffer = [0,0,0,0,0,0,0,0,2,4]; 
+// b.count = 2
+
+*/
+
 module.exports = buf;

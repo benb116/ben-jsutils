@@ -7,7 +7,7 @@ ben.str     = require('./str.js');
 ben.date    = require('./date.js');
 ben.math    = require('./math.js');
 ben.req     = require('./req.js');
-ben.buf 	= require('./buf.js');
+ben.buf     = require('./buf.js');
 
 // Pause for a certain number of ms, CODE BLOCKING
 ben.syncWait = function(ms) {

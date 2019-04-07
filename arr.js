@@ -122,6 +122,21 @@ arr.nInts = function(n) {
     return Array.apply(null, {length: n}).map(Function.call, Number);
 };
 
+arr.linint = function(min, max, dx) {
+    var n = Math.floor((max - min) / dx);
+    return arr.nInts(n+1).map(function(e) {
+        return e*dx + min;
+    });
+};
+
+arr.linspace = function(min, max, n) {
+    var diff = max - min;
+    var dx = diff / (n-1);
+    return arr.nInts(n).map(function(e) {
+        return e*dx + min;
+    });
+};
+
 // Reverse the order of an array ([1,2,3,4] => [4,3,2,1])
 arr.reverse = function(a) {
     var l = a.length;
@@ -209,24 +224,6 @@ arr.intersection = function() {
 arr.union = function() {
     var args = Array.prototype.slice.call(arguments);
     return arr.uniquify(args.flat());
-};
-
-// chainProm executes a set of promises sequentially
-// chainProm is run on an array of promises or non-promises
-// The zeroth promise resolves as init
-// chainProm makes the resolved or rejected values of the previous promise available to a given function
-// That function(genF for resolved and catchF for rejected) is also passed the current array element and index
-// That function should then return a promise that gets chained and is used for the next iteration
-arr.chainProm = function(a, init, genF, catchF) {
-    var x = a.reduce(function(prev, cur, i) {
-        return prev.then(function(r) {
-            // Promise generating functions take the previously returned value, the current value, and the current index
-            return genF(r, cur, i);
-        }).catch(function(e) {
-            return catchF(e, cur, i);
-        });
-    }, Promise.resolve(init));
-    return x;
 };
 
 module.exports = arr;

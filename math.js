@@ -7,6 +7,7 @@ math.randInt = function(min, max) {
 };
 
 math.roundDec = function(n, dec) {
+    dec = (dec || 2);
     var base = Math.pow(10,dec);
     return Math.round(n*base) / base;
 };

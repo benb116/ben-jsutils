@@ -45,7 +45,7 @@ date.prevDayAndTime = function(now, dayOfWeek, hour, minute, second) {
 };
 
 // Shift a date so that it's UTC date is its original local date
-// I.e. if current time in Philly is 4pm (utc 8pm), this shifts so the utc time is 4pm (edt = 12pm)
+// I.e. if current time in Philly is 4pm (UTC 8pm), this shifts so the UTC time is 4pm (EDT = 12pm)
 date.shiftTZ = function(d) {
     if (!d.toISOString) { d = new Date(d); }
     return new Date(d.getTime() - d.getTimezoneOffset()*60*1000);

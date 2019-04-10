@@ -1,5 +1,7 @@
 var arr = {};
 
+/* ARRAY FORM */
+
 // Combine two arrays
 arr.zip = function(a, a2) {
     return a.map(function(e, i) {
@@ -14,6 +16,22 @@ arr.objectify = function(a, a2) {
         return o;
     }, {}); 
 };
+
+// [[a,b], [c,d], [e,f]] <-> [[a,c,e], [b,d,f]]
+arr.transpose = function(a) {
+    var d = a.length;
+    var b = a[0].length;
+    var c = [];
+    for (var i = 0; i < b; i++) {
+        c.push([]);
+        for (var j = 0; j < d; j++) {
+            c[i].push(a[j][i]);
+        }
+    }
+    return c;
+};
+
+/* ARRAY MATH */
 
 // Return the cumulative sum of all elements in an array
 arr.sum = function(a) {
@@ -30,6 +48,40 @@ arr.diff = function(a) {
         return e - b[i];
     });
 };
+
+// Return the min of an array and its index
+arr.min = function(a) {
+    var mv = Math.min.apply(null, a);
+    return [mv, a.indexOf(mv)];
+};
+
+// Return the max of an array and its index
+arr.max = function(a) {
+    var mv = Math.max.apply(null, a);
+    return [mv, a.indexOf(mv)];
+};
+
+// Return an array [0,1,2...n-1]
+arr.nInts = function(n) {
+    return Array.apply(null, {length: n}).map(Function.call, Number);
+};
+
+arr.linint = function(min, max, dx) {
+    var n = Math.floor((max - min) / dx);
+    return arr.nInts(n+1).map(function(e) {
+        return e*dx + min;
+    });
+};
+
+arr.linspace = function(min, max, n) {
+    var diff = max - min;
+    var dx = diff / (n-1);
+    return arr.nInts(n).map(function(e) {
+        return e*dx + min;
+    });
+};
+
+/* DEALING WITH ARRAY ELEMENTS */
 
 // Remove an element from an array
 // option to remove all instances of that element
@@ -52,37 +104,13 @@ arr.findAll = function(a, e) {
     });
 };
 
+/* DO SOMETHING TO THE WHOLE ARRAY */
+
 // Remove duplicates in an array
 arr.uniquify = function(a) {
     return a.filter(function(e, i) {
         return a.indexOf(e) === i;
     });
-};
-
-// [[a,b], [c,d], [e,f]] <-> [[a,c,e], [b,d,f]]
-arr.transpose = function(a) {
-    var d = a.length;
-    var b = a[0].length;
-    var c = [];
-    for (var i = 0; i < b; i++) {
-        c.push([]);
-        for (var j = 0; j < d; j++) {
-            c[i].push(a[j][i]);
-        }
-    }
-    return c;
-};
-
-// Return the min of an array and its index
-arr.min = function(a) {
-    var mv = Math.min.apply(null, a);
-    return [mv, a.indexOf(mv)];
-};
-
-// Return the max of an array and its index
-arr.max = function(a) {
-    var mv = Math.max.apply(null, a);
-    return [mv, a.indexOf(mv)];
 };
 
 // Return n random elements from an array (n defaults to 1)
@@ -115,26 +143,6 @@ arr.shuffle = function(a) {
         array[randomIndex] = temporaryValue;
     }
     return array;
-};
-
-// Return an array [0,1,2...n-1]
-arr.nInts = function(n) {
-    return Array.apply(null, {length: n}).map(Function.call, Number);
-};
-
-arr.linint = function(min, max, dx) {
-    var n = Math.floor((max - min) / dx);
-    return arr.nInts(n+1).map(function(e) {
-        return e*dx + min;
-    });
-};
-
-arr.linspace = function(min, max, n) {
-    var diff = max - min;
-    var dx = diff / (n-1);
-    return arr.nInts(n).map(function(e) {
-        return e*dx + min;
-    });
 };
 
 // Reverse the order of an array ([1,2,3,4] => [4,3,2,1])
@@ -190,6 +198,8 @@ arr.filter2 = function(a, fn) {
     }
     return [filta, goodInd];
 };
+
+/* LOGICAL OPERATIONS */
 
 // keep specific elements of an array based on a list of indices
 // (Can be used with filter2 to filter one array based on how another was filtered)

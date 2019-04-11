@@ -13,12 +13,13 @@
     "utilities"
   ],
   "author": "Ben Bernstein <benb116@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/benb116/ben-jsutils/issues"
   },
   "homepage": "https://github.com/benb116/ben-jsutils#readme",
   "dependencies": {
+    "log-timestamp": "^0.3.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   }

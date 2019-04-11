@@ -18,10 +18,14 @@ ben.syncWait = function(ms) {
 };
 
 // Prepends a timestamp string to each console.log statement
-// 2019-04-09T13:04:39.947Z1554829479947Q ({date}T{time}Z{timestamp}Q)
-ben.logTS = function() {
-    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-    require('log-timestamp')(function() { return (new Date(Date.now() - tzoffset)).toISOString() + Date.now() +'Q %s'; });
+// 2019-04-10T20:39:19.023Z1554928759023Q ({date}T{time}Z{timestamp}Q)
+// Truthy argument will shift to local time
+ben.logTS = function(shift) {
+    shift = shift || 0;
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000 * shift; //offset in milliseconds
+    require('log-timestamp')(function() {
+        return (new Date(Date.now() - tzoffset)).toISOString() + (Date.now() - tzoffset) +'Q %s';
+    });
 };
 
 module.exports = ben;

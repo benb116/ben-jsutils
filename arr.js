@@ -204,17 +204,25 @@ arr.filter2 = function(a, fn) {
 // keep specific elements of an array based on a list of indices
 // (Can be used with filter2 to filter one array based on how another was filtered)
 arr.mask = function(a, inds) {
-    return a.filter(function(e, i) {
-        return arr.contains(inds, i);
-    });
+    var out = [];
+    for (var i = inds.length - 1; i >= 0; i--) {
+        var ti = inds[i];
+        out.push(a[ti]);
+    }
+    return out;
 };
 
 // remove specific elements of an array based on a list of indices
 // (Can be used with filter2 to filter one array based on how another was filtered)
 arr.invmask = function(a, inds) {
-    return a.filter(function(e, i) {
-        return !arr.contains(inds, i);
-    });
+    var out = a.slice();
+    var sind = inds.sort(function(a,b) {return a - b;});
+    // console.log(sind)
+    for (var i = sind.length - 1; i >= 0; i--) {
+        var ti = sind[i];
+        out.splice(ti, 1);
+    }
+    return out;
 };
 
 // Return all elements that are contained in all arrays

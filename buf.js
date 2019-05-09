@@ -6,6 +6,7 @@
 // This also increments a counter
 // Flush sets all elements of the array to a value and clears the counter
 var buf = function(n, e) {
+    var t;
     var out = {
         buffer: new Array(n),
         count: 0,
@@ -17,6 +18,12 @@ var buf = function(n, e) {
         flush: function(e) {
             this.buffer.fill(e);
             this.count = 0;
+        },
+        update: function(ms, el) {
+            clearInterval(t);
+            t = setInterval(function() {
+                out.push(el);
+            }, ms);
         }
     };
     if (e !== undefined) { out.flush(e); }

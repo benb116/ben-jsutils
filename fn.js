@@ -17,7 +17,7 @@ fn.debounce = function(immediate) {
     })();
 };
 
-// Returns a function that only allows a function to run every X ms
+// Returns a function that only allows a different function to run every X ms
 // var d = fn.throttle(); d(function() { dostuff(); }, 1000);
 fn.throttle = function(ms) {
     return (function() {
@@ -63,7 +63,37 @@ fn.nLimit = function(n) {
 
 // Run a function immediately and also set it to repeat every i ms
 fn.immedateInterval = function(f, i) {
-    f(); setInterval(f, i);
+    f(); return setInterval(f, i);
+};
+
+// Run a function at a specific frequency (without drift like setInterval) n times
+// var t = ben.fn.emitFreq(function() {...}, 10)
+// if n is falsy, run forever
+fn.emitFreq = function(f, ms, n) {
+    return (function() {
+        var nextT = 0;
+        var count = 0;
+        var t;
+        function N() {
+            t = setTimeout(function() {
+                count += 1;
+                nextT = nextT + ms;
+                if (count > n && n) {return;}
+                N();
+                f();
+            }, nextT - Date.now());
+        }
+
+        return {
+            start: function() {
+                nextT = Date.now();
+                N();
+            },
+            stop: function() {
+                clearTimeout(t);
+            }
+        };
+    })();
 };
 
 

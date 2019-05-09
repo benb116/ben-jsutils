@@ -16,7 +16,7 @@ date.nextDayAndTime = function(now, dayOfWeek, hour, minute, second) {
                  minute,
                  second);
 
-    if (result < now) {
+    if (result <= now) {
         result.setDate(result.getDate() + 7);
     }
     return result;
@@ -38,7 +38,7 @@ date.prevDayAndTime = function(now, dayOfWeek, hour, minute, second) {
                  minute,
                  second);
 
-    if (result > now) {
+    if (result >= now) {
         result.setDate(result.getDate() - 7);
     }
     return result;

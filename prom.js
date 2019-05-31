@@ -63,4 +63,8 @@ prom.chainProm = function(a, init, thenF, catchF) {
     }, Promise.resolve(init));
 };
 
+prom.multiThen = function(fn) {
+    return function(a) { return Promise.all(a.map((e) => fn(e))); };
+};
+
 module.exports = prom;

@@ -28,4 +28,8 @@ ben.logTS = function(shift) {
     });
 };
 
+ben.logJSON = function(input) {
+    console.log(JSON.stringify(input));
+};
+
 module.exports = ben;

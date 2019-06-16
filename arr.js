@@ -33,9 +33,17 @@ arr.transpose = function(a) {
 
 /* ARRAY MATH */
 
-// Return the cumulative sum of all elements in an array
+// Return the full sum of all elements in an array
 arr.sum = function(a) {
     return a.reduce(function(total, num) { return total + num; });
+};
+
+// Return an array with the cumulative sum at each point
+// e.g. a = [1, 2, 3, 4] -> out = [1, 3, 6, 10]
+arr.cumsum = function(a) {
+    var out = [];
+    a.reduce(function(ea,eb,i) { return out[i] = ea+eb; }, 0);
+    return out;
 };
 
 // Returns a[i+1] - a[i]

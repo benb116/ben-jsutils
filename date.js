@@ -1,6 +1,6 @@
 var date = {};
 
-// Return a date object representing the next occurance of a time on a specific weekday
+// Return a date object representing the next occurance of a local time on a specific weekday
 // i.e. if today is Tuesday, April 2nd, nextDayAndTime(5, 3, 30, 0) => Friday, April 5 at 3:30
 // dayOfWeek = 0 -> Sunday
 date.nextDayAndTime = function(dayOfWeek, hour, minute, second, extra) {

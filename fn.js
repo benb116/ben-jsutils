@@ -62,7 +62,7 @@ fn.nLimit = function(n) {
 };
 
 // Run a function immediately and also set it to repeat every i ms
-fn.immedateInterval = function(f, i) {
+fn.immediateInterval = function(f, i) {
     f(); return setInterval(f, i);
 };
 

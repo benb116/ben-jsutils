@@ -5,6 +5,7 @@
 // and removes the first element, effectively shifting the array
 // This also increments a counter
 // Flush sets all elements of the array to a value and clears the counter
+// Update will push an element to the buffer every n ms
 var buf = function(n, e) {
     var t;
     var out = {

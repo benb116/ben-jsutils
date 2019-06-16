@@ -12,4 +12,10 @@ math.roundDec = function(n, dec) {
     return Math.round(n*base) / base;
 };
 
+math.incLim = function(n, min, max) {
+    n += 1;
+    if (n > max) { n = min; }
+    return n;
+};
+
 module.exports = math;

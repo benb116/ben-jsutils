@@ -1,32 +1,31 @@
-var fs = {};
+var ben_fs = {};
 
-var fsm;
+var fs;
 
 // make Promise version of fs.readdir()
-fs.listDir = function(dirname) {
-    fsm = require('fs');
+ben_fs.listDir = function(dirname) {
+    fs = require('fs');
     return new Promise(function(resolve, reject) {
-        fsm.readdir(dirname, function(err, filenames){
+        fs.readdir(dirname, function(err, filenames){
             if (err) reject(err); 
             else resolve(filenames);
         });
     });
 };
 
-// utility function, return Promise
-fs.readFile = function(filename, enc) {
-    fsm = require('fs');
+ben_fs.readFile = function(filename, enc) {
+    fs = require('fs');
     enc = enc || 'utf8';
     return new Promise(function(resolve, reject) {
-        fsm.readFile(filename, enc, function(err, data){
+        fs.readFile(filename, enc, function(err, data){
             if (err) reject(err); 
             else resolve(data);
         });
     });
 };
 
-fs.writeFile = function(filename, data) {
-    fsm = require('fs');
+ben_fs.writeFile = function(filename, data) {
+    fs = require('fs');
     return new Promise(function(resolve, reject) {
         fs.writeFile(filename, data, function (err) {
             if (err) reject(err); 
@@ -35,4 +34,4 @@ fs.writeFile = function(filename, data) {
     });
 };
 
-module.exports = fs;
+module.exports = ben_fs;

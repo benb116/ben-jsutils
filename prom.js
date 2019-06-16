@@ -24,9 +24,10 @@ prom.delay = function(ms) {
 };
 
 // Returns a promise that resolves as the input promise or rejects after a timeout
-prom.timeout = function(P, ms) {
+prom.timeout = function(P, ms, msg) {
+    msg = msg || 'Promise timed out';
     var pt = new Promise(function(resolve, reject) {
-        setTimeout(reject, ms, 'Promise timed out');
+        setTimeout(reject, ms, msg);
     });
     return Promise.race([P, pt]);
 };
@@ -63,8 +64,54 @@ prom.chainProm = function(a, init, thenF, catchF) {
     }, Promise.resolve(init));
 };
 
+/*
+
+var abc = [1, 2, 3, 4]
+
+function thenFunc(prev, cur, ind) {
+    prev <- the fulfilled value from the previous promise
+    cur <- the current element of abc
+    ind <- the index of the current element of abc
+
+    return Promise(function(resolve, reject) { <- Promise that acts on inputs
+        resolve(prev + cur * ind)
+    });
+}
+
+ben.prom.chainProm(abc, 3, thenFunc).then(console.log)
+- First pass
+    prev = 3 (from init)
+    cur = 1
+    ind = 0
+    resolves as = 3
+- Second pass
+    prev = 3
+    cur = 2
+    ind = 1
+    resolves as = 5
+- Third pass
+    prev = 5
+    cur = 3
+    ind = 2
+    resolves as = 11
+- Fourth pass
+    prev = 11
+    cur = 4
+    ind = 3
+    resolves as = 23
+
+log output = 23
+
+*/
+
+// If a promise returns an array, use multiThen to create a promise.all
+// where each promise acts on one of the array elements
 prom.multiThen = function(fn) {
     return function(a) { return Promise.all(a.map((e) => fn(e))); };
 };
+
+// PromThatReturnsArray()
+// .then(ben.prom.multiThen(FnThatActsOnOneElement))
+// .then(function(ArrayOfResultsFromFn) { ... })
 
 module.exports = prom;

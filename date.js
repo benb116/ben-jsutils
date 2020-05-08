@@ -32,7 +32,7 @@ date.nextDayAndTime = function(dayOfWeek, hour, minute, second, extra) {
     return result;
 };
 
-// Return a date object representing the previous occurance of a local time on a specific weekday
+// Return a date object representing the previous occurance of a time on a specific weekday
 // i.e. if today is Tuesday, April 2nd, prevDayAndTime(5, 3, 30, 0) => Friday, May 29 at 3:30
 // dayOfWeek = 0 -> Sunday
 date.prevDayAndTime = function(dayOfWeek, hour, minute, second, extra) {

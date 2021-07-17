@@ -6,29 +6,29 @@
 // This also increments a counter
 // Flush sets all elements of the array to a value and clears the counter
 // Update will push an element to the buffer every n ms
-var buf = function(n, e) {
-    var t;
-    var out = {
-        buffer: new Array(n),
-        count: 0,
-        push: function(e) {
-            this.buffer.push(e);
-            this.buffer.shift();
-            this.count += 1;
-        },
-        flush: function(e) {
-            this.buffer.fill(e);
-            this.count = 0;
-        },
-        update: function(ms, el) {
-            clearInterval(t);
-            t = setInterval(function() {
-                out.push(el);
-            }, ms);
-        }
-    };
-    if (e !== undefined) { out.flush(e); }
-    return out;
+const buf = function buf(n, e) {
+  let t;
+  const out = {
+    buffer: new Array(n),
+    count: 0,
+    push(el) {
+      this.buffer.push(el);
+      this.buffer.shift();
+      this.count += 1;
+    },
+    flush(el) {
+      this.buffer.fill(el);
+      this.count = 0;
+    },
+    update(ms, el) {
+      clearInterval(t);
+      t = setInterval(() => {
+        out.push(el);
+      }, ms);
+    },
+  };
+  if (e !== undefined) { out.flush(e); }
+  return out;
 };
 
 /**

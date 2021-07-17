@@ -1,37 +1,33 @@
-var ben_fs = {};
+const benFS = {};
 
-var fs;
+const fs = require('fs');
 
 // make Promise version of fs.readdir()
-ben_fs.listDir = function(dirname) {
-    fs = require('fs');
-    return new Promise(function(resolve, reject) {
-        fs.readdir(dirname, function(err, filenames){
-            if (err) reject(err); 
-            else resolve(filenames.filter(n => n[0] !== '.'));
-        });
+benFS.listDir = function listDir(dirname) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(dirname, (err, filenames) => {
+      if (err) reject(err);
+      else resolve(filenames.filter((n) => n[0] !== '.'));
     });
+  });
 };
 
-ben_fs.readFile = function(filename, enc) {
-    fs = require('fs');
-    enc = enc || 'utf8';
-    return new Promise(function(resolve, reject) {
-        fs.readFile(filename, enc, function(err, data){
-            if (err) reject(err); 
-            else resolve(data);
-        });
+benFS.readFile = function readFile(filename, enc = 'utf8') {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filename, enc, (err, data) => {
+      if (err) reject(err);
+      else resolve(data);
     });
+  });
 };
 
-ben_fs.writeFile = function(filename, data) {
-    fs = require('fs');
-    return new Promise(function(resolve, reject) {
-        fs.writeFile(filename, data, function (err) {
-            if (err) reject(err); 
-            else resolve();
-        });
+benFS.writeFile = function writeFile(filename, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filename, data, (err) => {
+      if (err) reject(err);
+      else resolve();
     });
+  });
 };
 
-module.exports = ben_fs;
+module.exports = benFS;

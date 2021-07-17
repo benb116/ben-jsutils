@@ -8,7 +8,7 @@ ben_fs.listDir = function(dirname) {
     return new Promise(function(resolve, reject) {
         fs.readdir(dirname, function(err, filenames){
             if (err) reject(err); 
-            else resolve(filenames);
+            else resolve(filenames.filter(n => n[0] !== '.'));
         });
     });
 };

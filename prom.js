@@ -73,7 +73,7 @@ function thenFunc(prev, cur, ind) {
     cur <- the current element of abc
     ind <- the index of the current element of abc
 
-    return Promise(function(resolve, reject) { <- Promise that acts on inputs
+    return Promise(function(resolve, reject) { <- Example promise that acts on inputs
         resolve(prev + cur * ind)
     });
 }

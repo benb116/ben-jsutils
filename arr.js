@@ -57,6 +57,9 @@ arr.diff = function(a) {
     });
 };
 
+// Returns average of array values
+arr.average = (nList) => (nList.reduce((avg, n) => avg + n, 0)) / nList.length;
+
 // Return the min of an array and its index
 arr.min = function(a) {
     var mv = Math.min.apply(null, a);
@@ -250,16 +253,6 @@ arr.intersection = function() {
 arr.union = function() {
     var args = Array.prototype.slice.call(arguments);
     return arr.uniquify(args.flat());
-};
-
-// Are two arrays identical?
-// https://gomakethings.com/how-to-check-if-two-arrays-are-equal-with-vanilla-js/
-arr.areEqual = function (arr1, arr2) {
-    if (arr1.length !== arr2.length) return false; // Check if the arrays are the same length
-    for (var i = 0; i < arr1.length; i++) { // Check if all items exist and are in the same order
-        if (arr1[i] !== arr2[i]) return false;
-    }
-    return true;
 };
 
 module.exports = arr;

@@ -1,5 +1,3 @@
-const logTimeStamp = require('log-timestamp');
-
 // A collection of useful functions
 const ben = {};
 ben.arr = require('./arr');
@@ -8,7 +6,6 @@ ben.fn = require('./fn');
 ben.str = require('./str');
 ben.date = require('./date');
 ben.math = require('./math');
-ben.req = require('./req');
 ben.buf = require('./buf');
 ben.fs = require('./fs');
 
@@ -19,12 +16,10 @@ ben.syncWait = function syncWait(ms) {
   while (now - start < ms) { now = Date.now(); }
 };
 
-// Prepends a timestamp string to each console.log statement
-// 2019-04-10T20:39:19.023Z1554928759023Q ({date}T{time}Z{timestamp}Q)
-// Truthy argument will shift to local time
-ben.logTS = function logTS(shift = 0) {
-  const tzoffset = (new Date()).getTimezoneOffset() * 60000 * shift; // offset in milliseconds
-  logTimeStamp(() => `${(new Date(Date.now() - tzoffset)).toISOString() + (Date.now())}Q %s`);
+ben.querify = function querify(inJSON) {
+  if (!inJSON) { return ''; }
+  const qString = Object.keys(inJSON).map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(inJSON[key])}`).join('&');
+  return qString;
 };
 
 // https://github.com/beforesemicolon/javascript-solutions/blob/main/type%20check

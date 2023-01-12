@@ -1,9 +1,9 @@
 {
   "name": "ben-jsutils",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A personal collection of useful JS utilities",
   "main": "dist/index.js",
-  "types": "lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc"
   },

@@ -1,30 +1,31 @@
+/** Capitalize first letter of string */
 export function capitalize(input: string) {
   return input.charAt(0).toUpperCase() + input.slice(1);
 };
 
 // https://gist.github.com/jonlabelle/5375315
 
-// Does a string contain a substring
+/** Does a string contain a substring */
 export function contains(s: string, substring: string, fromIndex: number) {
   return s.indexOf(substring, fromIndex) !== -1;
 };
 
-// Right pad string with `char` if its' length is smaller than `minLen`
+/** Right pad string with `char` if its' length is smaller than `minLen` */
 export function rpad(s: string, minLen: number, ch = ' ') {
   return (s.length < minLen) ? s + repeat(ch, minLen - s.length) : s;
 };
 
-// Left pad string with `char` if its' length is smaller than `minLen`
+/** Left pad string with `char` if its' length is smaller than `minLen` */
 export function lpad(s: string, minLen: number, ch = ' ') {
   return ((s.length < minLen) ? repeat(ch, minLen - s.length) + s : s);
 };
 
-// Repeat string n times
+/** Repeat string n times */
 export function repeat(s: string, n: number) {
   return (new Array(n + 1)).join(s);
 };
 
-// Checks if a string is valid JSON. Returns parsed JSON or false.
+/** Checks if a string is valid JSON. Returns parsed JSON or false. */
 export function isValidJSON(s: string) {
   try {
     return JSON.parse(s);
@@ -33,7 +34,7 @@ export function isValidJSON(s: string) {
   }
 };
 
-// Returns a random alpha-numeric string of length n
+/** Returns a random alpha-numeric string of length n */
 export function randomString(n: number) {
   const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let result = '';

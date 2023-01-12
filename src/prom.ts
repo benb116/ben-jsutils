@@ -1,6 +1,7 @@
-// Returns a promise that resolves with the state of a given promise
-// 0 = pending, 1 = fulfilled, 2 = rejected;
-// var p = new Promise(...); ben.prom.promState(p).then(function(s) { // state = 0, 1, or 2 })
+/** Returns a promise that resolves with the state of a given promise
+ * 0 = pending, 1 = fulfilled, 2 = rejected;
+ * var p = new Promise(...); ben.prom.promState(p).then(function(s) { // state = 0, 1, or 2 })
+ */
 export function promState(p: Promise<unknown>) {
   const uniqueValue = Math.random().toString(36).replace(/[^a-z]+/g, '');
   return Promise.race([
@@ -11,9 +12,10 @@ export function promState(p: Promise<unknown>) {
     .catch(() => 2);
 };
 
-// Wait ms before continuing a promise chain
-// promObj.then(ben.prom.delay(1000)).then(function(outputOfpromObj){});
-// ben.prom.delay(2000)(init).then(function(init) { ... });
+/** Wait ms before continuing a promise chain
+ * promObj.then(ben.prom.delay(1000)).then(function(outputOfpromObj){});
+ * ben.prom.delay(2000)(init).then(function(init) { ... });
+ */
 export function delay(ms: number) {
   return function delayInner(input: unknown) {
     return new Promise((resolve) => {
@@ -22,7 +24,7 @@ export function delay(ms: number) {
   };
 };
 
-// Returns a promise that resolves as the input promise or rejects after a timeout
+/** Returns a promise that resolves as the input promise or rejects after a timeout */
 export function timeout(P: Promise<unknown>, ms: number, msg = 'Promise timed out') {
   const pt = new Promise((_resolve, reject) => {
     setTimeout(reject, ms, msg);
@@ -30,29 +32,35 @@ export function timeout(P: Promise<unknown>, ms: number, msg = 'Promise timed ou
   return Promise.race([P, pt]);
 };
 
-// Returns a promise that resolves at the specified datetime object
-// promObj.then(ben.prom.atDateTime(d)).then(function(outputOfpromObj){});
-// ben.prom.atDateTime(d)(init).then(function(init) { ... });
+/** Returns a promise that resolves at the specified datetime object
+ * promObj.then(ben.prom.atDateTime(d)).then(function(outputOfpromObj){});
+ * ben.prom.atDateTime(d)(init).then(function(init) { ... });
+ */
 export function atDateTime(d: Date) {
   const ms = d.getTime() - Date.now();
   return delay(ms);
 };
 
-// Execute an array of promises sequentially
+/** Execute an array of promises sequentially */
 export function seqProm(pArr: Promise<unknown>[]) {
   return pArr.reduce((chain, cur) => chain.then(cur), Promise.resolve());
 };
 
-// chainProm executes a set of promises sequentially
-// chainProm is run on an array of promises or non-promises
-// The zeroth promise resolves as init
-// chainProm makes the resolved or rejected values of the previous promise
-// available to a given function
-// That function(thenF for resolved and catchF for rejected)
-// is also passed the current array element and index
-// That function should then return a promise that gets chained and is used for the next iteration
 type FuncType = (out: unknown, cur: unknown, i: number) => Promise<unknown>
-export function chainProm(a: Promise<unknown>[], init: any, thenF: FuncType, catchF: FuncType) {
+
+/** chainProm executes a set of promises sequentially.
+ * chainProm is run on an array of promises or non-promises.
+ * 
+ * The zeroth promise resolves as init.
+ * 
+ * chainProm makes the resolved or rejected values of the previous promise
+ * available to a given function.
+ * That function (thenF for resolved and catchF for rejected)
+ * is also passed the current array element and index.
+ * 
+ * That function should then return a promise that gets chained and is used for the next iteration
+ */
+ export function chainProm(a: Promise<unknown>[], init: any, thenF: FuncType, catchF: FuncType) {
   // Promise generating functions take
   // the previously returned value, the current value, and the current index
   return a
@@ -62,7 +70,7 @@ export function chainProm(a: Promise<unknown>[], init: any, thenF: FuncType, cat
     Promise.resolve(init));
 };
 
-/*
+/**
 
 var abc = [1, 2, 3, 4]
 
@@ -102,12 +110,15 @@ log output = 23
 
 */
 
-// If a promise returns an array, use multiThen to create a promise.all
-// where each promise acts on one of the array elements
+/** If a promise returns an array, use multiThen to create a promise.all
+ * where each promise acts on one of the array elements
+ * 
+ *  PromThatReturnsArray()
+ * 
+ * .then(ben.prom.multiThen(FnThatActsOnOneElement))
+ * 
+ * .then(function(ArrayOfResultsFromFn) { ... })
+ */
 export function multiThen(fn: Function) {
   return function multiThenInner(a: unknown[]) { return Promise.all(a.map((e) => fn(e))); };
 };
-
-// PromThatReturnsArray()
-// .then(ben.prom.multiThen(FnThatActsOnOneElement))
-// .then(function(ArrayOfResultsFromFn) { ... })

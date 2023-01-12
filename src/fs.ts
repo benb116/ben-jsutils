@@ -1,27 +1,30 @@
-const fs = require('fs');
+import fs from 'fs'
 
-// make Promise version of fs.readdir()
-export function listDir(dirname: string) {
+
+/** List all files in a directory */
+export function listDir(dirname: string, showHidden = false) {
   return new Promise((resolve, reject) => {
-    fs.readdir(dirname, (err: Error, filenames: string[]) => {
+    fs.readdir(dirname, (err: Error | null, filenames: string[]) => {
       if (err) reject(err);
-      else resolve(filenames.filter((n) => n[0] !== '.'));
+      else resolve(filenames.filter((n) => n[0] !== '.' || showHidden));
     });
   });
 };
 
-export function readFile(filename: string, enc = 'utf8') {
+/** Read a file */
+export function readFile(filename: string) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filename, enc, (err: Error, data: string) => {
+    fs.readFile(filename, (err: Error | null, data: Buffer | string) => {
       if (err) reject(err);
       else resolve(data);
     });
   });
 };
 
+/** Write a file */
 export function writeFile(filename: string, data: any) {
   return new Promise<void>((resolve, reject) => {
-    fs.writeFile(filename, data, (err: Error) => {
+    fs.writeFile(filename, data, (err: Error | null) => {
       if (err) reject(err);
       else resolve();
     });

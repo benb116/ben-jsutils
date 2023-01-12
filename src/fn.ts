@@ -1,10 +1,12 @@
-// Create a new delay timer function
-// This returns a delay function that calls a callback after a certain amount of time
-// If the returned delay function is called again before the timeout,
-// it will reset the timer and begin delaying again
-// The callback can be executed immediately by passing a truthy value as the 'immediate' argument
-
-// var d = fn.debounce(); d(function() { dostuff(); }, 1000);
+/**
+ * Create a new delay timer function
+ * This returns a delay function that calls a callback after a certain amount of time
+ * If the returned delay function is called again before the timeout,
+ * it will reset the timer and begin delaying again
+ * The callback can be executed immediately by passing a truthy value as the 'immediate' argument
+  
+  var d = debounce(); d(function() { dostuff(); }, 1000);
+ */
 export function debounce(immediate: boolean) {
   return (function debounceInner() {
     let timer = 0;
@@ -16,8 +18,10 @@ export function debounce(immediate: boolean) {
   }());
 };
 
-// Returns a function that only allows a different function to run every X ms
-// var d = fn.throttle(); d(function() { dostuff(); }, 1000);
+/** Returns a function that only allows a different function to run every X ms
+ * 
+ * var d = fn.throttle(); d(function() { dostuff(); }, 1000);
+ */
 export function throttle() {
   return (function throttleInner() {
     let isrunning = 0;
@@ -31,8 +35,7 @@ export function throttle() {
   }());
 };
 
-// Run a function n times at most
-// Can also pass a truthy reset
+/** Run a function n times at most. Can also pass a truthy reset */
 export function nLimit(n: number) {
   return (function nLimitInner() {
     let nrun = 0;
@@ -46,14 +49,18 @@ export function nLimit(n: number) {
   }());
 };
 
-// Run a function immediately and also set it to repeat every i ms
+/** Run a function immediately and also set it to repeat every i ms */
 export function immediateInterval(f: Function, i: number) {
   f(); return setInterval(f, i);
 };
 
-// Run a function at a specific frequency (without drift like setInterval) n times
-// var t = ben.fn.emitFreq(function() {...}, 10)
-// if n is falsy, run forever
+/** Run a function at a specific frequency (without drift like setInterval) n times
+ * 
+ * var t = ben.fn.emitFreq(function() {...}, 10)
+ * t.start(); t.stop()
+ * 
+ * if n is falsy, run forever
+ */
 export function emitFreq(f: Function, ms: number, n: number) {
   return (function emitFreqInner() {
     let nextT = 0;

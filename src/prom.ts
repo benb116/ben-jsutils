@@ -1,9 +1,7 @@
-const prom = {};
-
 // Returns a promise that resolves with the state of a given promise
 // 0 = pending, 1 = fulfilled, 2 = rejected;
 // var p = new Promise(...); ben.prom.promState(p).then(function(s) { // state = 0, 1, or 2 })
-prom.promState = function promState(p) {
+export function promState(p: Promise<unknown>) {
   const uniqueValue = Math.random().toString(36).replace(/[^a-z]+/g, '');
   return Promise.race([
     p,
@@ -16,8 +14,8 @@ prom.promState = function promState(p) {
 // Wait ms before continuing a promise chain
 // promObj.then(ben.prom.delay(1000)).then(function(outputOfpromObj){});
 // ben.prom.delay(2000)(init).then(function(init) { ... });
-prom.delay = function delay(ms) {
-  return function delayInner(input) {
+export function delay(ms: number) {
+  return function delayInner(input: unknown) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms, input);
     });
@@ -25,8 +23,8 @@ prom.delay = function delay(ms) {
 };
 
 // Returns a promise that resolves as the input promise or rejects after a timeout
-prom.timeout = function timeout(P, ms, msg = 'Promise timed out') {
-  const pt = new Promise((resolve, reject) => {
+export function timeout(P: Promise<unknown>, ms: number, msg = 'Promise timed out') {
+  const pt = new Promise((_resolve, reject) => {
     setTimeout(reject, ms, msg);
   });
   return Promise.race([P, pt]);
@@ -35,13 +33,13 @@ prom.timeout = function timeout(P, ms, msg = 'Promise timed out') {
 // Returns a promise that resolves at the specified datetime object
 // promObj.then(ben.prom.atDateTime(d)).then(function(outputOfpromObj){});
 // ben.prom.atDateTime(d)(init).then(function(init) { ... });
-prom.atDateTime = function atDateTime(d) {
+export function atDateTime(d: Date) {
   const ms = d.getTime() - Date.now();
-  return prom.delay(ms);
+  return delay(ms);
 };
 
 // Execute an array of promises sequentially
-prom.seqProm = function seqProm(pArr) {
+export function seqProm(pArr: Promise<unknown>[]) {
   return pArr.reduce((chain, cur) => chain.then(cur), Promise.resolve());
 };
 
@@ -53,7 +51,8 @@ prom.seqProm = function seqProm(pArr) {
 // That function(thenF for resolved and catchF for rejected)
 // is also passed the current array element and index
 // That function should then return a promise that gets chained and is used for the next iteration
-prom.chainProm = function chainProm(a, init, thenF, catchF) {
+type FuncType = (out: unknown, cur: unknown, i: number) => Promise<unknown>
+export function chainProm(a: Promise<unknown>[], init: any, thenF: FuncType, catchF: FuncType) {
   // Promise generating functions take
   // the previously returned value, the current value, and the current index
   return a
@@ -105,12 +104,10 @@ log output = 23
 
 // If a promise returns an array, use multiThen to create a promise.all
 // where each promise acts on one of the array elements
-prom.multiThen = function multiThen(fn) {
-  return function multiThenInner(a) { return Promise.all(a.map((e) => fn(e))); };
+export function multiThen(fn: Function) {
+  return function multiThenInner(a: unknown[]) { return Promise.all(a.map((e) => fn(e))); };
 };
 
 // PromThatReturnsArray()
 // .then(ben.prom.multiThen(FnThatActsOnOneElement))
 // .then(function(ArrayOfResultsFromFn) { ... })
-
-module.exports = prom;

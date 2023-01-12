@@ -1,15 +1,12 @@
-/* eslint-disable no-param-reassign */
-const arr = {};
-
 /* ARRAY FORM */
 
 // Combine two arrays
-arr.zip = function zip(a, a2) {
+export function zip(a: any[], a2: any[]) {
   return a.map((e, i) => [e, a2[i]]);
 };
 
 // Create object with keys and values
-arr.objectify = function objectify(a, a2) {
+export function objectify(a: any[], a2: any[]) {
   return a.reduce((o, k, i) => {
     o[k] = a2[i];
     return o;
@@ -17,12 +14,12 @@ arr.objectify = function objectify(a, a2) {
 };
 
 // [[a,b], [c,d], [e,f]] <-> [[a,c,e], [b,d,f]]
-arr.transpose = function transpose(a) {
+export function transpose(a: any[]) {
   const d = a.length;
   const b = a[0].length;
-  const c = [];
+  const c = new Array(b);
   for (let i = 0; i < b; i += 1) {
-    c.push([]);
+    c[i] = [];
     for (let j = 0; j < d; j += 1) {
       c[i].push(a[j][i]);
     }
@@ -33,66 +30,71 @@ arr.transpose = function transpose(a) {
 /* ARRAY MATH */
 
 // Return the full sum of all elements in an array
-arr.sum = function sum(a) {
+export function sum(a: number[]) {
   return a.reduce((total, num) => total + num);
 };
 
 // Return an array with the cumulative sum at each point
 // e.g. a = [1, 2, 3, 4] -> out = [1, 3, 6, 10]
-arr.cumsum = function cumsum(a) {
-  const out = [];
-  a.reduce((ea, eb, i) => {
-    out[i] = ea + eb;
-    return out[i];
+export function cumsum(a: number[]) {
+  const out: number[] = [];
+  a.reduce((ea: number, eb: number, i: number) => {
+    const sum = ea + eb
+    out[i] = sum;
+    return sum;
   }, 0);
   return out;
 };
 
 // Returns a[i+1] - a[i]
-arr.diff = function diff(a) {
-  const a2 = a.slice();
-  const b = a.slice();
-  a2.shift();
-  b.pop();
-  return a2.map((e, i) => e - b[i]);
+export function diff(a: number[]) {
+  const out: number[] = new Array(a.length - 1);
+  for(let i = 1; i < a.length; i++) {
+    const right = a[i]
+    const left = a[i - 1]
+    out[i-1] = (right && left) ? right - left : 0;
+  }
+  return out;
 };
 
 // Returns average of array values
-arr.average = (nList) => (nList.reduce((avg, n) => avg + n, 0)) / nList.length;
+export function average(nList: number[]) {
+  return nList.reduce((avg, n) => avg + n, 0) / nList.length;
+}
 
 // Return the min of an array and its index
-arr.min = function min(a) {
+export function min(a: number[]) {
   const mv = Math.min.apply(null, a);
   return [mv, a.indexOf(mv)];
 };
 
 // Return the max of an array and its index
-arr.max = function max(a) {
+export function max(a: number[]) {
   const mv = Math.max.apply(null, a);
   return [mv, a.indexOf(mv)];
 };
 
 // Return an array [0,1,2...n-1]
-arr.nInts = function nInts(n) {
-  return Array(n).fill().map((x, i) => i);
+export function nInts(n: number) {
+  return Array(n).fill(undefined).map((_x, i) => i);
 };
 
-arr.linint = function linint(min, max, dx) {
+export function linint(min: number, max: number, dx: number) {
   const n = Math.floor((max - min) / dx);
-  return arr.nInts(n + 1).map((e) => e * dx + min);
+  return Array(n).fill(undefined).map((_e, i) => i * dx + min);
 };
 
-arr.linspace = function linspace(min, max, n) {
+export function linspace(min: number, max: number, n: number) {
   const diff = max - min;
   const dx = diff / (n - 1);
-  return arr.nInts(n).map((e) => e * dx + min);
+  return Array(n).fill(undefined).map((_e, i) => i * dx + min);
 };
 
 /* DEALING WITH ARRAY ELEMENTS */
 
 // Remove an element from an array
 // option to remove all instances of that element
-arr.remove = function remove(a, member, all) {
+export function remove(a: any[], member: any, all: boolean) {
   const b = a.slice(); // Splice mutates the array, this copies it
   if (all) {
     return b.filter((e) => e !== member);
@@ -101,34 +103,34 @@ arr.remove = function remove(a, member, all) {
 };
 
 // Does an array contain an element (return true or false)
-arr.contains = function contains(a, e) { return (a.indexOf(e) > -1); };
+export function contains(a: any[], e: any) { return (a.indexOf(e) > -1); };
 
 // Returns all indices of an array where an element is located
-arr.findAll = function findAll(a, e) {
-  return arr.nInts(a.length).filter((i) => a[i] === e);
+export function findAll(a: any[], e: any) {
+  return nInts(a.length).filter((i) => a[i] === e);
 };
 
 /* DO SOMETHING TO THE WHOLE ARRAY */
 
 // Remove duplicates in an array
-arr.uniquify = function uniquify(a) {
+export function uniquify(a: any[]) {
   return a.filter((e, i) => a.indexOf(e) === i);
 };
 
 // Return n random elements from an array (n defaults to 1)
-arr.randEl = function randEl(a, n) {
+export function randEl(a: any[], n: number) {
   if (!n) { n = 1; }
   if (n === 1) {
     return a[Math.floor(Math.random() * a.length)];
   }
-  const b = arr.shuffle(a);
+  const b = shuffle(a);
   const out = b.slice(0, n);
   return out;
 };
 
 // Returns a random shuffling of an array (does not mutate)
 // https://stackoverflow.com/a/2450976/1293256
-arr.shuffle = function shuffle(a) {
+export function shuffle(a: any[]) {
   const array = a.slice();
   let currentIndex = array.length;
   let temporaryValue; let
@@ -149,15 +151,15 @@ arr.shuffle = function shuffle(a) {
 };
 
 // Reverse the order of an array ([1,2,3,4] => [4,3,2,1])
-arr.reverse = function reverse(a) {
+export function reverse(a: any[]) {
   const l = a.length;
-  return a.map((e, i) => a[l - i - 1]);
+  return a.map((_e, i) => a[l - i - 1]);
 };
 
 // Sort an array and also return the sorted index array;
-arr.sort2 = function sort2(a) {
-  const list = [];
+export function sort2(a: any[]) {
   const nEl = a.length;
+  const list = new Array(nEl);
 
   for (let j = 0; j < nEl; j += 1) {
     list.push({ s: a[j], n: j });
@@ -180,7 +182,7 @@ arr.sort2 = function sort2(a) {
 
 // Reorder the elements of an array using the given index order
 // (Can be used with sort2 to sort one array based on how another was sorted)
-arr.reorder = function reorder(a, inds) {
+export function reorder(a: any[], inds: any[]) {
   const out = new Array(a.length);
   for (let i = 0; i < inds.length; i += 1) {
     out[inds[i]] = a[i];
@@ -190,7 +192,7 @@ arr.reorder = function reorder(a, inds) {
 
 // Filter an array based on a function that returns true/false
 // Also return the indices of remaining elements
-arr.filter2 = function filter2(a, fn) {
+export function filter2(a: any[], fn: Function) {
   const filta = [];
   const goodInd = [];
   for (let i = 0; i < a.length; i += 1) {
@@ -206,7 +208,7 @@ arr.filter2 = function filter2(a, fn) {
 
 // keep specific elements of an array based on a list of indices
 // (Can be used with filter2 to filter one array based on how another was filtered)
-arr.mask = function mask(a, inds) {
+export function mask(a: any[], inds: any[]) {
   const out = [];
   for (let i = inds.length - 1; i >= 0; i -= 1) {
     const ti = inds[i];
@@ -217,7 +219,7 @@ arr.mask = function mask(a, inds) {
 
 // remove specific elements of an array based on a list of indices
 // (Can be used with filter2 to filter one array based on how another was filtered)
-arr.invmask = function invmask(ar, inds) {
+export function invmask(ar: any[], inds: any[]) {
   const out = ar.slice();
   const sind = inds.sort((a, b) => a - b);
   // console.log(sind)
@@ -229,22 +231,20 @@ arr.invmask = function invmask(ar, inds) {
 };
 
 // Return all elements that are contained in all arrays
-arr.intersection = function intersection(...args) {
+export function intersection(...args: any[][]) {
   const arrs = Array.prototype.slice.call(args);
   const nA = arrs.length;
   const t = arrs[0];
-  return t.filter((e) => {
+  return t.filter((e: any) => {
     for (let i = 1; i < nA; i += 1) {
-      if (!arr.contains(arrs[i], e)) { return false; }
+      if (!contains(arrs[i], e)) { return false; }
     }
     return true;
   });
 };
 
 // Return all elements that are contained in any array
-arr.union = function union(...args) {
+export function union(...args: any[][]) {
   const arrs = Array.prototype.slice.call(args);
-  return arr.uniquify(arrs.flat());
+  return uniquify(arrs.flat());
 };
-
-module.exports = arr;

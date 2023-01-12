@@ -1,17 +1,15 @@
-const fn = {};
-const prom = require('./prom');
-
 // Create a new delay timer function
 // This returns a delay function that calls a callback after a certain amount of time
 // If the returned delay function is called again before the timeout,
 // it will reset the timer and begin delaying again
 // The callback can be executed immediately by passing a truthy value as the 'immediate' argument
+
 // var d = fn.debounce(); d(function() { dostuff(); }, 1000);
-fn.debounce = function debounce(immediate) {
+export function debounce(immediate: boolean) {
   return (function debounceInner() {
     let timer = 0;
-    if (immediate) { return function debounce1(callback) { callback(); }; }
-    return function debounce2(callback, ms) {
+    if (immediate) { return function debounce1(callback: Function) { callback(); }; }
+    return function debounce2(callback: Function, ms: number) {
       clearTimeout(timer);
       timer = setTimeout(callback, ms);
     };
@@ -20,10 +18,10 @@ fn.debounce = function debounce(immediate) {
 
 // Returns a function that only allows a different function to run every X ms
 // var d = fn.throttle(); d(function() { dostuff(); }, 1000);
-fn.throttle = function throttle() {
+export function throttle() {
   return (function throttleInner() {
     let isrunning = 0;
-    return function throttle1(callback, ms) {
+    return function throttle1(callback: Function, ms: number) {
       if (!isrunning) {
         callback();
         isrunning = 1;
@@ -33,25 +31,12 @@ fn.throttle = function throttle() {
   }());
 };
 
-// Execute a promise generating function,
-// then only allow it to execute again once the promise has resolved.
-fn.waitBeforeRepeat = function waitBeforeRepeat() {
-  return (function waitBeforeRepeatInner() {
-    let p = Promise.resolve(1);
-    return function waitBeforeRepeat1(pGen) {
-      prom.promState(p).then((state) => {
-        if (state) { p = pGen(); }
-      });
-    };
-  }());
-};
-
 // Run a function n times at most
 // Can also pass a truthy reset
-fn.nLimit = function nLimit(n) {
+export function nLimit(n: number) {
   return (function nLimitInner() {
     let nrun = 0;
-    return function nLimit1(callback, reset) {
+    return function nLimit1(callback: Function, reset: boolean) {
       if (reset) { nrun = 0; }
       if (nrun < n) {
         callback();
@@ -62,18 +47,18 @@ fn.nLimit = function nLimit(n) {
 };
 
 // Run a function immediately and also set it to repeat every i ms
-fn.immediateInterval = function immediateInterval(f, i) {
+export function immediateInterval(f: Function, i: number) {
   f(); return setInterval(f, i);
 };
 
 // Run a function at a specific frequency (without drift like setInterval) n times
 // var t = ben.fn.emitFreq(function() {...}, 10)
 // if n is falsy, run forever
-fn.emitFreq = function emitFreq(f, ms, n) {
+export function emitFreq(f: Function, ms: number, n: number) {
   return (function emitFreqInner() {
     let nextT = 0;
     let count = 0;
-    let t;
+    let t: ReturnType<typeof setTimeout>;
     function N() {
       t = setTimeout(() => {
         count += 1;
@@ -95,5 +80,3 @@ fn.emitFreq = function emitFreq(f, ms, n) {
     };
   }());
 };
-
-module.exports = fn;

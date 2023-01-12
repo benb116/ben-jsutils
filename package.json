@@ -1,13 +1,17 @@
 {
   "name": "ben-jsutils",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A personal collection of useful JS utilities",
-  "main": "index.js",
-  "scripts": {},
+  "main": "dist/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/benb116/ben-jsutils.git"
   },
+  "files": ["dist/**/*"],
   "keywords": [
     "javascript",
     "utilities"
@@ -17,10 +21,13 @@
   "bugs": {
     "url": "https://github.com/benb116/ben-jsutils/issues"
   },
+  "prepare" : "npm run build",
   "homepage": "https://github.com/benb116/ben-jsutils#readme",
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.26.0"
+    "eslint-plugin-import": "^2.26.0",
+    "typescript": "^4.9.4"
   }
 }
